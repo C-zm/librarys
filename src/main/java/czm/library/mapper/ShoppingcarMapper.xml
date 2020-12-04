@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="czm.library.mapper.ShoppingcarMapper">
+
+    <select id="selectAllShoppingcar" resultType="Shoppingcar">
+        select * from shoppingcar;
+    </select>
+
+    <select id="selectShoppingcarBySid" parameterType="Integer" resultType="Shoppingcar">
+        select * from shoppingcar where sid = #{sid}
+    </select>
+
+    <select id="selectShoppingcarByUid" parameterType="Integer" resultType="Shoppingcar">
+        select * from shoppingcar where uid = #{uid};
+    </select>
+
+    <insert id="insert" parameterType="Shoppingcar">
+        insert into shoppingcar(uid,bid,num,bprice) value (#{uid},#{bid},#{num},(select bprice from book where bid = #{bid}))
+    </insert>
+
+    <update id="updateShoppingcarBySid" parameterType="Shoppingcar">
+        update shoppingcar <set>
+        <if test='uid!=null and uid!=""'>
+            uid=#{uid},
+        </if>
+        <if test='num!=null and num!=""'>
+            num=#{num},
+        </if>
+        <if test='bprice!=null and bprice!=""'>
+            bprice=#{bprice},
+        </if>
+        <if test='checked!=null'>
+            checked=#{checked},
+        </if>
+        <if test='bid!=null and bid!=""'>
+            bid=#{bid}
+        </if>
+    </set>
+        where sid=#{sid};
+    </update>
+    
+    <delete id="deleteShoppingcarBySid" parameterType="Integer">
+        delete from shoppingcar where sid=#{sid}
+    </delete>
+
+    <resultMap type="Shoppingcar" id="CartMap">
+        <id property="sid" column="sid"/>
+        <result property="uid" column="uid"/>
+        <result property="bid" column="bid"/>
+        <result property="num" column="num"/>
+        <result property="checked" column="checked"/>
+        <collection property="books" ofType="Book">
+            <id property="bid" column="bid"/>
+            <result property="bname" column="bname"/>
+            <result property="bsrc" column="bsrc"/>
+            <result property="bprice" column="bprice"/>
+            <result property="inventory" column="inventory"/>
+        </collection>
+    </resultMap>
+    <!-- 根据课程id查询选修此课程的全部学生 -->
+    <select id="selectAllbookShoppingcar" resultMap="CartMap">
+         select * from book b,shoppingcar s where b.bid = s.bid and uid = #{uid}
+    </select>
+
+</mapper>

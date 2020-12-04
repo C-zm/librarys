@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="czm.library.mapper.ClassificationMapper">
+    <select id="selectAllClassification" resultType="Classification">
+        select * from classification;
+    </select>
+
+    <select id="selectClassificationById" parameterType="Integer" resultType="Classification">
+        select * from classification where classid = #{classid}
+    </select>
+
+    <select id="selectClassificationByKeyword" parameterType="String" resultType="Classification">
+        select * from classification where btype like concat('%',#{btype},'%');
+    </select>
+
+    <insert id="insert" parameterType="Classification">
+        insert into classification(btype) value (#{btype})
+    </insert>
+
+    <update id="updateClassificationById" parameterType="Classification">
+        update classification <set>
+        <if test='btype!=null and btype!=""'>
+            btype=#{btype},
+        </if>
+    </set>
+        where classid=#{classid};
+    </update>
+    
+    <delete id="deleteClassificationById" parameterType="Integer">
+        delete from classification where classid=#{classid}
+    </delete>
+
+
+    <resultMap type="Classification" id="BookMap">
+        <id property="classid" column="classid"/>
+        <result property="btype" column="btype"/>
+         <collection property="books" ofType="Book">
+             <id property="bid" column="bid"/>
+             <result property="bname" column="bname"/>
+             <result property="bsrc" column="bsrc"/>
+             <result property="bprice" column="bprice"/>
+             <result property="inventory" column="inventory"/>
+             <result property="isnew" column="isnew"/>
+         </collection>
+     </resultMap>
+    <!-- 根据课程id查询选修此课程的全部学生 -->
+    <select id="selectAllbooktype" resultMap="BookMap">
+         select * from book b,classification c where b.btype = c.btype
+    </select>
+</mapper>

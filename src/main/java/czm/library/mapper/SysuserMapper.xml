@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="czm.library.mapper.SysuserMapper">
+    <select id="selectAllSysuser" resultType="Sysuser">
+        select * from sysuser;
+    </select>
+
+    <select id="selectSysuserById" parameterType="Integer" resultType="Sysuser">
+        select * from sysuser where sysid = #{sysid}
+    </select>
+
+    <select id="selectSysuserByPower" parameterType="Integer" resultType="Sysuser">
+        select * from sysuser where power = #{power}
+    </select>
+
+    <select id="selectSysuserBySysname" parameterType="String" resultType="Sysuser">
+        select * from sysuser where sysname = #{sysname}
+    </select>
+
+    <select id="selectUserByKeyword" parameterType="String" resultType="Sysuser">
+        select * from sysuser where sysname like concat('%',#{sysname},'%');
+    </select>
+
+    <insert id="insert" parameterType="Sysuser">
+        insert into sysuser(sysname,power,syspassword,sysphone,syssrc) value (#{sysname},#{power},#{syspassword},#{sysphone},#{syssrc})
+    </insert>
+
+    <update id="updateUserById" parameterType="Sysuser">
+        update sysuser <set>
+        <if test='sysname!=null and sysname!=""'>
+            sysname=#{sysname},
+        </if>
+        <if test='power!=null and power!=""'>
+            power=#{power},
+        </if>
+        <if test='syspassword!=null and syspassword!=""'>
+            syspassword=#{syspassword},
+        </if>
+        <if test='sysphone!=null and sysphone!=""'>
+            sysphone=#{sysphone},
+        </if>
+        <if test='syssrc!=null and syssrc!=""'>
+            syssrc=#{syssrc},
+        </if>
+    </set>
+        where sysid=#{sysid};
+    </update>
+    
+    <delete id="deleteUserById" parameterType="Integer">
+        delete from sysuser where sysid=#{sysid}
+    </delete>
+
+</mapper>

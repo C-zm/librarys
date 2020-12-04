@@ -1,0 +1,106 @@
+body{
+    background: -moz-linear-gradient(top, #cccccc 0%, #ffffff 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(100%,#ffffff));
+    background: -webkit-linear-gradient(top, #cccccc 0%,#ffffff 100%);
+    background: -o-linear-gradient(top, #cccccc 0%,#ffffff 100%);
+    background: -ms-linear-gradient(top, #cccccc 0%,#ffffff 100%);
+    background: linear-gradient(to bottom, #cccccc 0%,#ffffff 100%);
+}
+
+.widget-shadow {
+    background-color: #fff;
+    box-shadow: 0 -1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+    -webkit-box-shadow: 0 -1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+    -moz-box-shadow: 0 -1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+}
+
+.form-body {
+    padding: 1.5em 2em;
+}
+
+/*--login-page--*/
+.login-page {
+
+    width: 40%;
+    margin: 1em auto 0;
+    margin-top: 5em;
+}
+.signup-page {
+    width: 40%;
+    margin: 1em auto 0;
+}
+/* LOGIN 标志 */
+.login-page h2.title1,.signup-page h2.title1{
+    text-align: center;
+    padding: 1em;
+    background: #629aa9;
+    border-bottom: 10px solid #4b7884;
+    margin: 0;
+    color: #fff;
+    font-size: 1.6em;
+}
+.login-top {
+    padding: 1.5em;
+    border-bottom: 1px solid #DED9D9;
+    text-align: center;
+}
+.login-body {
+    padding: 4em 2em;
+}
+.login-page input[type="text"], .login-page input[type="password"] {
+    font-size: 1em;
+    padding: 14px 15px 14px 37px;
+    width: 100%;
+    color: #A8A8A8;
+    outline: none;
+    border: 1px solid #D3D3D3;
+    background: #FFFFFF;
+    margin: 0em 0em 1.5em 0em;
+}
+.login-page input.sysname {
+    background: url(../images/user.png)no-repeat 8px 16px #fff;
+}
+.login-page input.syspassword {
+    background: url(../images/lock.png)no-repeat 8px 16px #fff;
+}
+.login-page input[type="submit"] {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    background: #F2B33F;
+    width: 40%;
+    padding: .6em 1em;
+    font-size: 1em;
+    margin: 0.5em auto 0;
+    display: block;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    -o-transition: 0.5s all;
+}
+.login-page input[type="submit"]:hover{
+    background: #337ab7;
+}
+
+/*-- sign-up --*/
+
+.signup-page input[type="text"],.signup-page input[type="text"],.signup-page input[type="password"]{
+    outline:none;
+    border: 1px solid #D0D0D0;
+    background: none;
+    font-size: 15px;
+    padding: 14px 15px 14px 37px;
+    width:100%;
+    margin: 0em 0 1.5em 0;
+}
+.signup-page input[type="text"] {
+    background: url(../images/user.png)no-repeat 8px 16px #fff;
+}
+.signup-page input[type="password"] {
+    background: url(../images/lock.png)no-repeat 8px 16px #fff;
+}
+.signup-page input[type="text"]:focus  ,.signup-page input[type="password"]:focus,.login-page input[type="text"]:focus,.login-page input[type="password"]:focus{
+    border-color: #337ab7;
+}

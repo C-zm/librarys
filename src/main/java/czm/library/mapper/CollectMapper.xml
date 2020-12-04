@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="czm.library.mapper.CollectMapper">
+
+    <select id="selectAllCollect" resultType="Collect">
+        select * from collect;
+    </select>
+
+    <select id="selectCollectByUid" parameterType="Integer" resultType="Collect">
+        select * from collect where uid = #{uid}
+    </select>
+
+    <select id="selectCollectByUidBid" parameterType="Collect" resultType="Collect">
+        select * from collect where uid = #{uid} and bid = #{bid}
+    </select>
+
+    <insert id="insert" parameterType="Collect">
+        insert into collect(uid,bid) value (#{uid},#{bid})
+    </insert>
+
+    <delete id="deleteCollectByColid" parameterType="Integer">
+        delete from collect where colid=#{colid}
+    </delete>
+
+    <resultMap type="Collect" id="CollectBook">
+        <id property="colid" column="colid"/>
+        <result property="uid" column="uid"/>
+        <result property="bid" column="bid"/>
+        <result property="cTime" column="cTime"/>
+        <collection property="collectBook" ofType="Book">
+            <result property="bname" column="bname"/>
+            <result property="bsrc" column="bsrc"/>
+            <result property="bprice" column="bprice"/>
+            <result property="inventory" column="inventory"/>
+            <result property="isnew" column="isnew"/>
+        </collection>
+    </resultMap>
+    <select id="selectCollectBookByUid" parameterType="Integer" resultMap="CollectBook">
+        select * from collect c, book b where b.bid = c.bid and uid = #{uid};
+    </select>
+
+    <select id="selectCollectByBname" parameterType="String" resultMap="CollectBook">
+        select * from collect c, book b where b.bid = c.bid and bname like concat('%',#{bname},'%');
+    </select>
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="czm.library.mapper.OrdersMapper">
+    <select id="selectAllOrders" resultType="Orders">
+        select * from orders;
+    </select>
+
+    <select id="selectOrdersByOid" parameterType="Integer" resultType="Orders">
+        select * from orders where oid = #{oid}
+    </select>
+
+    <select id="selectOrdersByUid" parameterType="Integer" resultType="Orders">
+        select * from orders where uid = #{uid};
+    </select>
+
+    <insert id="insert" parameterType="Orders">
+        insert into orders(oid,totalprice,uid,aid) value ((now()),#{totalprice},#{uid},#{aid})
+    </insert>
+
+    <update id="updateOrdersByOid" parameterType="Orders">
+        update orders <set>
+        <if test='totalprice!=null and totalprice!=""'>
+            totalprice=#{totalprice},
+        </if>
+        <if test='aid!=null and aid!=""'>
+            aid=#{aid}
+        </if>
+    </set>
+        where oid=#{oid};
+    </update>
+    
+    <delete id="deleteOrdersByOid" parameterType="Integer">
+        delete from orders where oid=#{oid}
+    </delete>
+
+    <select id="selectmaxOrders" parameterType="Integer" resultType="Long">
+        SELECT MAX(oid) FROM orders WHERE uid = #{uid}
+    </select>
+
+
+
+
+    <resultMap type="Orders" id="OrderDetailMap">
+        <id property="oid" column="oid"/>
+        <result property="uid" column="uid"/>
+        <result property="aid" column="aid"/>
+        <result property="totalprice" column="totalprice"/>
+        <result property="otime" column="otime"/>
+        <collection property="orderDetail" ofType="OrderDetail">
+            <id property="odid" column="odid"/>
+            <result property="oid" column="oid"/>
+            <result property="bname" column="bname"/>
+            <result property="bsrc" column="bsrc"/>
+            <result property="bprice" column="bprice"/>
+            <result property="num" column="num"/>
+            <result property="state" column="state"/>
+        </collection>
+    </resultMap>
+    <!-- 根据课程id查询选修此课程的全部学生 -->
+    <select id="selectAllOrders_Detail" resultMap="OrderDetailMap">
+         select * from orders o,order_detail od where o.oid = od.oid and uid = #{uid}
+    </select>
+
+    <select id="selectOneOrders_Detail" resultMap="OrderDetailMap">
+         select * from orders o,order_detail od where o.oid = od.oid and uid = #{uid} and o.oid = #{oid}
+    </select>
+
+</mapper>

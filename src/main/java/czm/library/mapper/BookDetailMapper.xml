@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="czm.library.mapper.BookDetailMapper">
+
+    <select id="selectAllBookDetail" resultType="BookDetail">
+        select * from book_detail;
+    </select>
+
+    <select id="selectBookDetailById" parameterType="Integer" resultType="BookDetail">
+        select * from book_detail where bdid = #{bdid}
+    </select>
+
+    <select id="selectBookDetailByKeyword" parameterType="String" resultType="BookDetail">
+        select * from book_detail where bname like concat('%',#{bname},'%');
+    </select>
+
+    <insert id="insert" parameterType="BookDetail">
+        INSERT INTO book_detail(bdid,bname,bprice,bid,inventory) SELECT bdid,bname,bprice,bid,inventory FROM book WHERE bid = #{bid}
+    </insert>
+    <update id="updateBookDetailById" parameterType="BookDetail">
+        update book_detail <set>
+        <if test='bname!=null and bname!=""'>
+            bname=#{bname},
+        </if>
+        <if test='bprice!=null and bprice!=""'>
+            bprice=#{bprice},
+        </if>
+        <if test='inventory!=null and inventory!=""'>
+            inventory=#{inventory},
+        </if>
+        <if test='bsrclist!=null and bsrclist!=""'>
+            bsrclist=#{bsrclist},
+        </if>
+
+        <if test='author!=null and author!=""'>
+            author=#{author},
+        </if>
+        <if test='ontime!=null and ontime!=""'>
+            ontime=#{ontime},
+        </if>
+        <if test='introduce!=null and introduce!=""'>
+            introduce=#{introduce},
+        </if>
+    </set>
+        where bdid=#{bdid};
+    </update>
+    
+    <delete id="deleteBookDetailById" parameterType="Integer">
+        delete from book_detail where bdid=#{bdid}
+    </delete>
+</mapper>

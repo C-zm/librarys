@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="czm.library.mapper.CommentMapper">
+
+    <select id="selectAllComment" resultType="Comment">
+        select * from comment;
+    </select>
+
+    <insert id="insert" parameterType="Comment">
+        insert into comment(csrc,cdetail,bid) value (#{csrc},#{cdetail},#{bid})
+    </insert>
+
+    <select id="selectCommentByUid" parameterType="Integer" resultType="Comment">
+        select * from comment where uid = #{uid}
+    </select>
+
+    <select id="selectCommentByBid" parameterType="Integer" resultType="Comment">
+        select * from comment where bid = #{bid};
+    </select>
+
+    <select id="selectCommentByCid" parameterType="Integer" resultType="Comment">
+        select * from comment where cid = #{cid};
+    </select>
+
+    <update id="updateCommentByCid" parameterType="Comment">
+        update comment <set>
+        <if test='bid!=null and bid!=""'>
+            bid=#{bid},
+        </if>
+        <if test='csrc!=null and csrc!=""'>
+            csrc=#{csrc},
+        </if>
+        <if test='uid!=null and uid!=""'>
+            uid=#{uid},
+        </if>
+        <if test='cdetail!=null and cdetail!=""'>
+            cdetail=#{cdetail},
+        </if>
+        <if test='ctime!=null and ctime!=""'>
+            ctime=#{ctime},
+        </if>
+    </set>
+        where cid=#{cid};
+    </update>
+    
+    <delete id="deleteCommentByCid" parameterType="Integer">
+        delete from comment where cid=#{cid}
+    </delete>
+
+    <select id="selectCommentByKeyword" parameterType="String" resultType="Comment">
+        select * from comment where cdetail like concat('%',#{cdetail},'%');
+    </select>
+
+</mapper>
